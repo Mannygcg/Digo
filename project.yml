@@ -1,0 +1,46 @@
+name: Whisper
+options:
+  bundleIdPrefix: com.manuelcabrera
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+
+packages:
+  KeyboardShortcuts:
+    url: https://github.com/sindresorhus/KeyboardShortcuts
+    from: 2.2.1
+  WhisperKit:
+    url: https://github.com/argmaxinc/WhisperKit
+    from: 1.1.0
+
+targets:
+  Whisper:
+    type: application
+    platform: macOS
+    sources:
+      - path: Whisper
+    dependencies:
+      - package: KeyboardShortcuts
+      - package: WhisperKit
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.manuelcabrera.Whisper
+        MARKETING_VERSION: "0.1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        SWIFT_VERSION: "5.0"
+        SWIFT_STRICT_CONCURRENCY: minimal
+        CODE_SIGN_STYLE: Automatic
+        ENABLE_HARDENED_RUNTIME: YES
+        DEVELOPMENT_ASSET_PATHS: ""
+    info:
+      path: Whisper/Info.plist
+      properties:
+        LSUIElement: true
+        NSMicrophoneUsageDescription: "Whisper needs microphone access to capture your speech for dictation."
+        NSSpeechRecognitionUsageDescription: "Whisper needs speech recognition access to transcribe your dictation on-device."
+        CFBundleDisplayName: "Whisper"
+    entitlements:
+      path: Whisper/Whisper.entitlements
+      properties:
+        com.apple.security.app-sandbox: false
+        com.apple.security.device.audio-input: true
