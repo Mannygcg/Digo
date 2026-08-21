@@ -2,7 +2,7 @@ import AVFoundation
 import os
 
 final class AudioCaptureEngine {
-    private static let logger = Logger(subsystem: "com.manuelcabrera.Whisper", category: "AudioCaptureEngine")
+    private static let logger = Logger(subsystem: "com.manuelcabrera.Digo", category: "AudioCaptureEngine")
 
     private let engine = AVAudioEngine()
 

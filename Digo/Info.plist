@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Whisper</string>
+	<string>Digo</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -23,8 +23,8 @@
 	<key>LSUIElement</key>
 	<true/>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Whisper needs microphone access to capture your speech for dictation.</string>
+	<string>Digo needs microphone access to capture your speech for dictation.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Whisper needs speech recognition access to transcribe your dictation on-device.</string>
+	<string>Digo needs speech recognition access to transcribe your dictation on-device.</string>
 </dict>
 </plist>

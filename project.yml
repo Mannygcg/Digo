@@ -1,4 +1,4 @@
-name: Whisper
+name: Digo
 options:
   bundleIdPrefix: com.manuelcabrera
   deploymentTarget:
@@ -14,17 +14,17 @@ packages:
     from: 1.1.0
 
 targets:
-  Whisper:
+  Digo:
     type: application
     platform: macOS
     sources:
-      - path: Whisper
+      - path: Digo
     dependencies:
       - package: KeyboardShortcuts
       - package: WhisperKit
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.manuelcabrera.Whisper
+        PRODUCT_BUNDLE_IDENTIFIER: com.manuelcabrera.Digo
         MARKETING_VERSION: "0.1.0"
         CURRENT_PROJECT_VERSION: "1"
         SWIFT_VERSION: "5.0"
@@ -33,14 +33,14 @@ targets:
         ENABLE_HARDENED_RUNTIME: YES
         DEVELOPMENT_ASSET_PATHS: ""
     info:
-      path: Whisper/Info.plist
+      path: Digo/Info.plist
       properties:
         LSUIElement: true
-        NSMicrophoneUsageDescription: "Whisper needs microphone access to capture your speech for dictation."
-        NSSpeechRecognitionUsageDescription: "Whisper needs speech recognition access to transcribe your dictation on-device."
-        CFBundleDisplayName: "Whisper"
+        NSMicrophoneUsageDescription: "Digo needs microphone access to capture your speech for dictation."
+        NSSpeechRecognitionUsageDescription: "Digo needs speech recognition access to transcribe your dictation on-device."
+        CFBundleDisplayName: "Digo"
     entitlements:
-      path: Whisper/Whisper.entitlements
+      path: Digo/Digo.entitlements
       properties:
         com.apple.security.app-sandbox: false
         com.apple.security.device.audio-input: true

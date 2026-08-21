@@ -1,0 +1,418 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0D35DCFB7B6795B2032F38F7 /* TextDeliveryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D17C0DADD512C7029B2ADC0 /* TextDeliveryService.swift */; };
+		0FDDA831292E8B41758324F4 /* HUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57433DC36BEB699626F56948 /* HUDView.swift */; };
+		19D324250797B0D84B9CC2D6 /* HUDWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A61CF0A9B7B3FCAA7B92D7 /* HUDWindowController.swift */; };
+		2468B5F1F593DA5899E14319 /* DigoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957352367CC878C381FC46FE /* DigoApp.swift */; };
+		39129DB687803F32B5DE3B52 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F416D3775CFEEAE51A44CF7D /* AppDelegate.swift */; };
+		3E2638097BA3B1B92F67CA70 /* StatusItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B050ACE45D6FA80994C33B66 /* StatusItemController.swift */; };
+		4AE5154962CBD72A80D8A46D /* HUDViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA680DB0DB484CD8E360FF0 /* HUDViewModel.swift */; };
+		55FD6ED53757BA134989F7EF /* SettingsPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06B220D9547E75B3FAA87B4 /* SettingsPlaceholderView.swift */; };
+		6DB8F95306B2CE35FE377992 /* WhisperKitEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E99CFA6A04D65F86589FBB /* WhisperKitEngine.swift */; };
+		801245F2C976785CB52681D5 /* AudioCaptureEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDEF72645DF21FA21D01973 /* AudioCaptureEngine.swift */; };
+		9795C276E71AEC39BAB0C839 /* PermissionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B71566E28B79540B6748FB /* PermissionsManager.swift */; };
+		98861806E4C617EEAF37E5FC /* WhisperKit in Frameworks */ = {isa = PBXBuildFile; productRef = AEEB62C8450454123F2E55BB /* WhisperKit */; };
+		A709495E88D9B56F1CF22FC0 /* KeyboardShortcuts+Names.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7819F815A60B51EBA25DF3F1 /* KeyboardShortcuts+Names.swift */; };
+		AFF6571F28F910F4AB38914C /* TranscriptionEngineKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FAF18A018C3E16DD937C53 /* TranscriptionEngineKind.swift */; };
+		B37271371FCBED622D027F3C /* DictationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A994D3E67CF8F0180AF741A0 /* DictationController.swift */; };
+		BC5223B22C179A669C85F9DE /* HotkeyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B07DE407C87E89C110DEBF /* HotkeyController.swift */; };
+		BFC2F65F76E05A22967F3FE4 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = D5817B4AEFD799CB41A7EA65 /* KeyboardShortcuts */; };
+		C6BDBE8A1E91907509243B71 /* AppleSpeechEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58ADA19C9FE2C71B7866A1B1 /* AppleSpeechEngine.swift */; };
+		FCC103E710BF896D8E8B386C /* TranscriptionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3503DC8DF59D83FF4A7F4284 /* TranscriptionEngine.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0D17C0DADD512C7029B2ADC0 /* TextDeliveryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextDeliveryService.swift; sourceTree = "<group>"; };
+		1FA680DB0DB484CD8E360FF0 /* HUDViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDViewModel.swift; sourceTree = "<group>"; };
+		3503DC8DF59D83FF4A7F4284 /* TranscriptionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionEngine.swift; sourceTree = "<group>"; };
+		35E99CFA6A04D65F86589FBB /* WhisperKitEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhisperKitEngine.swift; sourceTree = "<group>"; };
+		45B71566E28B79540B6748FB /* PermissionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsManager.swift; sourceTree = "<group>"; };
+		53F209881B3E122308E812A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		57433DC36BEB699626F56948 /* HUDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDView.swift; sourceTree = "<group>"; };
+		58A61CF0A9B7B3FCAA7B92D7 /* HUDWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDWindowController.swift; sourceTree = "<group>"; };
+		58ADA19C9FE2C71B7866A1B1 /* AppleSpeechEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSpeechEngine.swift; sourceTree = "<group>"; };
+		76FAF18A018C3E16DD937C53 /* TranscriptionEngineKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionEngineKind.swift; sourceTree = "<group>"; };
+		7819F815A60B51EBA25DF3F1 /* KeyboardShortcuts+Names.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardShortcuts+Names.swift"; sourceTree = "<group>"; };
+		7FDEF72645DF21FA21D01973 /* AudioCaptureEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCaptureEngine.swift; sourceTree = "<group>"; };
+		957352367CC878C381FC46FE /* DigoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigoApp.swift; sourceTree = "<group>"; };
+		A994D3E67CF8F0180AF741A0 /* DictationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictationController.swift; sourceTree = "<group>"; };
+		B050ACE45D6FA80994C33B66 /* StatusItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusItemController.swift; sourceTree = "<group>"; };
+		B06B220D9547E75B3FAA87B4 /* SettingsPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPlaceholderView.swift; sourceTree = "<group>"; };
+		CA14CC9C1243B0F60CEA172F /* Digo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Digo.entitlements; sourceTree = "<group>"; };
+		E9D4335BB5E0D7ED9D8095B7 /* Digo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Digo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F416D3775CFEEAE51A44CF7D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F6B07DE407C87E89C110DEBF /* HotkeyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		618A393139CBFEAC5C6046BC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BFC2F65F76E05A22967F3FE4 /* KeyboardShortcuts in Frameworks */,
+				98861806E4C617EEAF37E5FC /* WhisperKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		09ADF028C9F266DD79318241 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E9D4335BB5E0D7ED9D8095B7 /* Digo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		54A132B7833F0A125ACA4E3A /* Digo */ = {
+			isa = PBXGroup;
+			children = (
+				F416D3775CFEEAE51A44CF7D /* AppDelegate.swift */,
+				58ADA19C9FE2C71B7866A1B1 /* AppleSpeechEngine.swift */,
+				7FDEF72645DF21FA21D01973 /* AudioCaptureEngine.swift */,
+				A994D3E67CF8F0180AF741A0 /* DictationController.swift */,
+				CA14CC9C1243B0F60CEA172F /* Digo.entitlements */,
+				957352367CC878C381FC46FE /* DigoApp.swift */,
+				F6B07DE407C87E89C110DEBF /* HotkeyController.swift */,
+				57433DC36BEB699626F56948 /* HUDView.swift */,
+				1FA680DB0DB484CD8E360FF0 /* HUDViewModel.swift */,
+				58A61CF0A9B7B3FCAA7B92D7 /* HUDWindowController.swift */,
+				53F209881B3E122308E812A0 /* Info.plist */,
+				7819F815A60B51EBA25DF3F1 /* KeyboardShortcuts+Names.swift */,
+				45B71566E28B79540B6748FB /* PermissionsManager.swift */,
+				B06B220D9547E75B3FAA87B4 /* SettingsPlaceholderView.swift */,
+				B050ACE45D6FA80994C33B66 /* StatusItemController.swift */,
+				0D17C0DADD512C7029B2ADC0 /* TextDeliveryService.swift */,
+				3503DC8DF59D83FF4A7F4284 /* TranscriptionEngine.swift */,
+				76FAF18A018C3E16DD937C53 /* TranscriptionEngineKind.swift */,
+				35E99CFA6A04D65F86589FBB /* WhisperKitEngine.swift */,
+			);
+			path = Digo;
+			sourceTree = "<group>";
+		};
+		73E09A1F6F295E677ADE93CD = {
+			isa = PBXGroup;
+			children = (
+				54A132B7833F0A125ACA4E3A /* Digo */,
+				09ADF028C9F266DD79318241 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		56375C41C3875DF767D58095 /* Digo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EDC43E5917C53D758CD328C4 /* Build configuration list for PBXNativeTarget "Digo" */;
+			buildPhases = (
+				40C9E62B12A1FEF421AC223A /* Sources */,
+				618A393139CBFEAC5C6046BC /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Digo;
+			packageProductDependencies = (
+				D5817B4AEFD799CB41A7EA65 /* KeyboardShortcuts */,
+				AEEB62C8450454123F2E55BB /* WhisperKit */,
+			);
+			productName = Digo;
+			productReference = E9D4335BB5E0D7ED9D8095B7 /* Digo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B64B9941237C0BAA938AC194 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					56375C41C3875DF767D58095 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 62C755425555692EEEF77FAF /* Build configuration list for PBXProject "Digo" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 73E09A1F6F295E677ADE93CD;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				EABC21C046706EDF7F3CE25F /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
+				48EA8634F87AF9DA51553ADB /* XCRemoteSwiftPackageReference "WhisperKit" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 09ADF028C9F266DD79318241 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				56375C41C3875DF767D58095 /* Digo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		40C9E62B12A1FEF421AC223A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				39129DB687803F32B5DE3B52 /* AppDelegate.swift in Sources */,
+				C6BDBE8A1E91907509243B71 /* AppleSpeechEngine.swift in Sources */,
+				801245F2C976785CB52681D5 /* AudioCaptureEngine.swift in Sources */,
+				B37271371FCBED622D027F3C /* DictationController.swift in Sources */,
+				2468B5F1F593DA5899E14319 /* DigoApp.swift in Sources */,
+				0FDDA831292E8B41758324F4 /* HUDView.swift in Sources */,
+				4AE5154962CBD72A80D8A46D /* HUDViewModel.swift in Sources */,
+				19D324250797B0D84B9CC2D6 /* HUDWindowController.swift in Sources */,
+				BC5223B22C179A669C85F9DE /* HotkeyController.swift in Sources */,
+				A709495E88D9B56F1CF22FC0 /* KeyboardShortcuts+Names.swift in Sources */,
+				9795C276E71AEC39BAB0C839 /* PermissionsManager.swift in Sources */,
+				55FD6ED53757BA134989F7EF /* SettingsPlaceholderView.swift in Sources */,
+				3E2638097BA3B1B92F67CA70 /* StatusItemController.swift in Sources */,
+				0D35DCFB7B6795B2032F38F7 /* TextDeliveryService.swift in Sources */,
+				FCC103E710BF896D8E8B386C /* TranscriptionEngine.swift in Sources */,
+				AFF6571F28F910F4AB38914C /* TranscriptionEngineKind.swift in Sources */,
+				6DB8F95306B2CE35FE377992 /* WhisperKitEngine.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		234EE3079F3D20ED359B6828 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		8825AC607FE4B6A96DBDA25D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Digo/Digo.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = Digo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.manuelcabrera.Digo;
+				SDKROOT = macosx;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		CA5A3916BE28B07C276EFAD7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Digo/Digo.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = Digo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.manuelcabrera.Digo;
+				SDKROOT = macosx;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		E29F14CBB0DD88B83DD7EA66 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		62C755425555692EEEF77FAF /* Build configuration list for PBXProject "Digo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E29F14CBB0DD88B83DD7EA66 /* Debug */,
+				234EE3079F3D20ED359B6828 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		EDC43E5917C53D758CD328C4 /* Build configuration list for PBXNativeTarget "Digo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA5A3916BE28B07C276EFAD7 /* Debug */,
+				8825AC607FE4B6A96DBDA25D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		48EA8634F87AF9DA51553ADB /* XCRemoteSwiftPackageReference "WhisperKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/argmaxinc/WhisperKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
+		EABC21C046706EDF7F3CE25F /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AEEB62C8450454123F2E55BB /* WhisperKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 48EA8634F87AF9DA51553ADB /* XCRemoteSwiftPackageReference "WhisperKit" */;
+			productName = WhisperKit;
+		};
+		D5817B4AEFD799CB41A7EA65 /* KeyboardShortcuts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EABC21C046706EDF7F3CE25F /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
+			productName = KeyboardShortcuts;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = B64B9941237C0BAA938AC194 /* Project object */;
+}

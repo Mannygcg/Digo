@@ -8,7 +8,7 @@ enum DictationState {
 }
 
 final class DictationController {
-    private static let logger = Logger(subsystem: "com.manuelcabrera.Whisper", category: "DictationController")
+    private static let logger = Logger(subsystem: "com.manuelcabrera.Digo", category: "DictationController")
     private static let selectedEngineDefaultsKey = "selectedEngine"
 
     private let audioCaptureEngine = AudioCaptureEngine()

@@ -2,7 +2,7 @@ import AppKit
 import os
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
-    private static let logger = Logger(subsystem: "com.manuelcabrera.Whisper", category: "AppDelegate")
+    private static let logger = Logger(subsystem: "com.manuelcabrera.Digo", category: "AppDelegate")
 
     private var statusItemController: StatusItemController?
     private var dictationController: DictationController?

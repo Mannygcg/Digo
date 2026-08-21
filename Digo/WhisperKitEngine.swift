@@ -3,7 +3,7 @@ import WhisperKit
 import os
 
 final class WhisperKitEngine: TranscriptionEngine {
-    private static let logger = Logger(subsystem: "com.manuelcabrera.Whisper", category: "WhisperKitEngine")
+    private static let logger = Logger(subsystem: "com.manuelcabrera.Digo", category: "WhisperKitEngine")
     private static let targetFormat = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: 16_000, channels: 1, interleaved: false)!
     private static let modelName = "openai_whisper-base"
 

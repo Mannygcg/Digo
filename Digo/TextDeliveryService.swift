@@ -2,7 +2,7 @@ import AppKit
 import os
 
 final class TextDeliveryService {
-    private static let logger = Logger(subsystem: "com.manuelcabrera.Whisper", category: "TextDeliveryService")
+    private static let logger = Logger(subsystem: "com.manuelcabrera.Digo", category: "TextDeliveryService")
     private static let backspaceKeyCode: CGKeyCode = 0x33
 
     /// On-screen text for the current live, still-correctable phrase (not yet committed).

@@ -19,7 +19,7 @@ final class StatusItemController: NSObject {
 
         super.init()
 
-        statusItem.button?.image = NSImage(systemSymbolName: "mic", accessibilityDescription: "Whisper")
+        statusItem.button?.image = NSImage(systemSymbolName: "mic", accessibilityDescription: "Digo")
 
         let engineMenu = NSMenu()
         for kind in TranscriptionEngineKind.allCases {
@@ -39,7 +39,7 @@ final class StatusItemController: NSObject {
         menu.addItem(.separator())
         menu.addItem(withTitle: "Settings…", action: #selector(openSettings), keyEquivalent: ",").target = self
         menu.addItem(.separator())
-        menu.addItem(withTitle: "Quit Whisper", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        menu.addItem(withTitle: "Quit Digo", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         statusItem.menu = menu
 
         updateEngineCheckmarks()
@@ -64,10 +64,10 @@ final class StatusItemController: NSObject {
         switch state {
         case .idle:
             toggleItem.title = "Start Dictation"
-            statusItem.button?.image = NSImage(systemSymbolName: "mic", accessibilityDescription: "Whisper")
+            statusItem.button?.image = NSImage(systemSymbolName: "mic", accessibilityDescription: "Digo")
         case .listening:
             toggleItem.title = "Stop Dictation"
-            statusItem.button?.image = NSImage(systemSymbolName: "mic.fill", accessibilityDescription: "Whisper (listening)")
+            statusItem.button?.image = NSImage(systemSymbolName: "mic.fill", accessibilityDescription: "Digo (listening)")
         }
     }
 
