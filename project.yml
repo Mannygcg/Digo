@@ -37,7 +37,6 @@ targets:
       properties:
         LSUIElement: true
         NSMicrophoneUsageDescription: "Digo needs microphone access to capture your speech for dictation."
-        NSSpeechRecognitionUsageDescription: "Digo needs speech recognition access to transcribe your dictation on-device."
         CFBundleDisplayName: "Digo"
     entitlements:
       path: Digo/Digo.entitlements

@@ -24,7 +24,5 @@
 	<true/>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Digo needs microphone access to capture your speech for dictation.</string>
-	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Digo needs speech recognition access to transcribe your dictation on-device.</string>
 </dict>
 </plist>

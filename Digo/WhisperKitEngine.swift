@@ -1,19 +1,29 @@
-import AVFoundation
+import Foundation
 import WhisperKit
 import os
 
-final class WhisperKitEngine: TranscriptionEngine {
+enum WhisperKitEngineError: Error {
+    case tokenizerUnavailable
+}
+
+/// Streams the microphone into WhisperKit's own realtime transcriber, which captures audio
+/// itself via WhisperKit's AudioProcessor, so text appears continuously while the user talks,
+/// instead of only after they stop.
+final class WhisperKitEngine {
     private static let logger = Logger(subsystem: "com.manuelcabrera.Digo", category: "WhisperKitEngine")
-    private static let targetFormat = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: 16_000, channels: 1, interleaved: false)!
-    private static let modelName = "openai_whisper-base"
+
+    private let modelName: String
+    private let stateQueue = DispatchQueue(label: "com.manuelcabrera.Digo.WhisperKitEngine.state")
 
     private var loadTask: Task<WhisperKit, Error>?
-    private var converter: AVAudioConverter?
-    private var samples: [Float] = []
+    private var streamer: AudioStreamTranscriber?
     private var sessionID = 0
-
+    private var latestText = ""
     private var onFinalHandler: ((String) -> Void)?
-    private var onErrorHandler: ((Error) -> Void)?
+
+    init(modelName: String) {
+        self.modelName = modelName
+    }
 
     /// Kicks off (or reuses) the model load without blocking the caller — call as soon as
     /// this engine is selected so the model is likely ready by the time recording starts.
@@ -24,82 +34,79 @@ final class WhisperKitEngine: TranscriptionEngine {
     func startStreaming(onPartial: @escaping (String) -> Void,
                          onFinal: @escaping (String) -> Void,
                          onError: @escaping (Error) -> Void) throws {
-        sessionID += 1
-        samples = []
-        converter = nil
+        let session = stateQueue.sync { () -> Int in
+            sessionID += 1
+            latestText = ""
+            return sessionID
+        }
         onFinalHandler = onFinal
-        onErrorHandler = onError
-        preload()
-    }
-
-    func appendAudio(_ buffer: AVAudioPCMBuffer) {
-        if converter == nil {
-            converter = AVAudioConverter(from: buffer.format, to: Self.targetFormat)
-        }
-        guard let converter else { return }
-
-        let ratio = Self.targetFormat.sampleRate / buffer.format.sampleRate
-        let capacity = AVAudioFrameCount(Double(buffer.frameLength) * ratio) + 16
-        guard let outputBuffer = AVAudioPCMBuffer(pcmFormat: Self.targetFormat, frameCapacity: capacity) else { return }
-
-        var consumed = false
-        var conversionError: NSError?
-        converter.convert(to: outputBuffer, error: &conversionError) { _, outStatus in
-            guard !consumed else {
-                outStatus.pointee = .noDataNow
-                return nil
-            }
-            consumed = true
-            outStatus.pointee = .haveData
-            return buffer
-        }
-
-        guard conversionError == nil, let channelData = outputBuffer.floatChannelData else { return }
-        samples.append(contentsOf: UnsafeBufferPointer(start: channelData[0], count: Int(outputBuffer.frameLength)))
-    }
-
-    func stopStreaming() {
-        let session = sessionID
-        let capturedSamples = samples
-        let onFinal = onFinalHandler
-        let onError = onErrorHandler
-        samples = []
-
-        guard !capturedSamples.isEmpty else {
-            onFinal?("")
-            return
-        }
 
         Task {
             do {
                 let kit = try await loadedWhisperKit().value
-                let results = try await kit.transcribe(audioArray: capturedSamples)
-                // A new session may have started while this transcription was running —
-                // drop the result instead of delivering a stale transcript into it.
-                guard session == self.sessionID else {
-                    Self.logger.debug("Discarding transcription from superseded session")
-                    return
+                guard let tokenizer = kit.tokenizer else {
+                    throw WhisperKitEngineError.tokenizerUnavailable
                 }
-                let text = results.map(\.text).joined(separator: " ").trimmingCharacters(in: .whitespacesAndNewlines)
-                Self.logger.debug("Whisper final: \(text, privacy: .public)")
-                onFinal?(text)
+                guard stateQueue.sync(execute: { session == self.sessionID }) else { return }
+
+                let decodingOptions = DecodingOptions(task: .transcribe, language: "en", skipSpecialTokens: true)
+                let streamer = AudioStreamTranscriber(
+                    audioEncoder: kit.audioEncoder,
+                    featureExtractor: kit.featureExtractor,
+                    segmentSeeker: kit.segmentSeeker,
+                    textDecoder: kit.textDecoder,
+                    tokenizer: tokenizer,
+                    audioProcessor: kit.audioProcessor,
+                    decodingOptions: decodingOptions
+                ) { [weak self] _, newState in
+                    guard let self, session == self.stateQueue.sync(execute: { self.sessionID }) else { return }
+                    let text = (newState.confirmedSegments.map(\.text) + newState.unconfirmedSegments.map(\.text))
+                        .joined()
+                        .trimmingCharacters(in: .whitespacesAndNewlines)
+                    guard !text.isEmpty else { return }
+                    self.stateQueue.sync { self.latestText = text }
+                    onPartial(text)
+                }
+                self.streamer = streamer
+
+                // Re-check right before starting the mic: stop() may have landed while we were loading.
+                guard stateQueue.sync(execute: { session == self.sessionID }) else { return }
+                try await streamer.startStreamTranscription()
             } catch {
-                guard session == self.sessionID else { return }
-                Self.logger.error("Whisper transcription failed: \(String(describing: error), privacy: .public)")
-                onError?(error)
+                guard stateQueue.sync(execute: { session == self.sessionID }) else { return }
+                Self.logger.error("Whisper streaming failed: \(String(describing: error), privacy: .public)")
+                onError(error)
             }
         }
     }
 
-    /// Memoized so concurrent callers (preload + the transcription itself) share one
+    func stopStreaming() {
+        let (session, stream) = stateQueue.sync { () -> (Int, AudioStreamTranscriber?) in
+            sessionID += 1 // invalidates any start still in flight
+            return (sessionID, streamer)
+        }
+        let onFinal = onFinalHandler
+
+        Task {
+            await stream?.stopStreamTranscription()
+            let text = stateQueue.sync { latestText }
+            Self.logger.debug("Whisper final: \(text, privacy: .public)")
+            onFinal?(text)
+        }
+    }
+
+    /// Memoized so concurrent callers (preload + streaming itself) share one
     /// in-flight download/load instead of racing separate WhisperKit() calls.
     private func loadedWhisperKit() -> Task<WhisperKit, Error> {
         if let loadTask {
             return loadTask
         }
         let task = Task<WhisperKit, Error> {
-            let kit = try await WhisperKit(model: Self.modelName)
-            Self.logger.debug("WhisperKit model loaded")
+            // load: true is required here — unlike the old batch transcribe() call, which
+            // lazily loaded models itself, AudioStreamTranscriber reads kit.tokenizer etc.
+            // directly and needs them already populated.
+            let kit = try await WhisperKit(model: modelName, load: true)
+            Self.logger.debug("WhisperKit model loaded: \(self.modelName, privacy: .public)")
             return kit
         }
         loadTask = task

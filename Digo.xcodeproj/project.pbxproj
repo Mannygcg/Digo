@@ -14,41 +14,43 @@
 		39129DB687803F32B5DE3B52 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F416D3775CFEEAE51A44CF7D /* AppDelegate.swift */; };
 		3E2638097BA3B1B92F67CA70 /* StatusItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B050ACE45D6FA80994C33B66 /* StatusItemController.swift */; };
 		4AE5154962CBD72A80D8A46D /* HUDViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA680DB0DB484CD8E360FF0 /* HUDViewModel.swift */; };
-		55FD6ED53757BA134989F7EF /* SettingsPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06B220D9547E75B3FAA87B4 /* SettingsPlaceholderView.swift */; };
 		6DB8F95306B2CE35FE377992 /* WhisperKitEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E99CFA6A04D65F86589FBB /* WhisperKitEngine.swift */; };
-		801245F2C976785CB52681D5 /* AudioCaptureEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDEF72645DF21FA21D01973 /* AudioCaptureEngine.swift */; };
+		7E1C1D3F523440C5C3980219 /* SettingsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA25314BD29EBA751DE8B0E0 /* SettingsWindowController.swift */; };
+		835CA7D168540E95DF8E4A0A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C001C227E2D64949AA20A345 /* SettingsView.swift */; };
+		90C97DD021767E8DC2FB5180 /* WhisperModelCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06C954845D96FBA85008592 /* WhisperModelCatalog.swift */; };
 		9795C276E71AEC39BAB0C839 /* PermissionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B71566E28B79540B6748FB /* PermissionsManager.swift */; };
 		98861806E4C617EEAF37E5FC /* WhisperKit in Frameworks */ = {isa = PBXBuildFile; productRef = AEEB62C8450454123F2E55BB /* WhisperKit */; };
+		9EB3246A8D066EDC906DCE3F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1863B8A3E91E9B336663639A /* Assets.xcassets */; };
 		A709495E88D9B56F1CF22FC0 /* KeyboardShortcuts+Names.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7819F815A60B51EBA25DF3F1 /* KeyboardShortcuts+Names.swift */; };
-		AFF6571F28F910F4AB38914C /* TranscriptionEngineKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FAF18A018C3E16DD937C53 /* TranscriptionEngineKind.swift */; };
 		B37271371FCBED622D027F3C /* DictationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A994D3E67CF8F0180AF741A0 /* DictationController.swift */; };
+		B543123D7C1CD042D25B5104 /* LaunchAtLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34FEB94C1D2A7EBD56F1FFB /* LaunchAtLoginManager.swift */; };
 		BC5223B22C179A669C85F9DE /* HotkeyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B07DE407C87E89C110DEBF /* HotkeyController.swift */; };
 		BFC2F65F76E05A22967F3FE4 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = D5817B4AEFD799CB41A7EA65 /* KeyboardShortcuts */; };
-		C6BDBE8A1E91907509243B71 /* AppleSpeechEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58ADA19C9FE2C71B7866A1B1 /* AppleSpeechEngine.swift */; };
-		FCC103E710BF896D8E8B386C /* TranscriptionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3503DC8DF59D83FF4A7F4284 /* TranscriptionEngine.swift */; };
+		FEC24D01E202777223AF09DE /* WhisperModelStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6315F57623F787E6FF8D4ABF /* WhisperModelStorage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0D17C0DADD512C7029B2ADC0 /* TextDeliveryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextDeliveryService.swift; sourceTree = "<group>"; };
+		1863B8A3E91E9B336663639A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1FA680DB0DB484CD8E360FF0 /* HUDViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDViewModel.swift; sourceTree = "<group>"; };
-		3503DC8DF59D83FF4A7F4284 /* TranscriptionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionEngine.swift; sourceTree = "<group>"; };
 		35E99CFA6A04D65F86589FBB /* WhisperKitEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhisperKitEngine.swift; sourceTree = "<group>"; };
 		45B71566E28B79540B6748FB /* PermissionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsManager.swift; sourceTree = "<group>"; };
 		53F209881B3E122308E812A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		57433DC36BEB699626F56948 /* HUDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDView.swift; sourceTree = "<group>"; };
 		58A61CF0A9B7B3FCAA7B92D7 /* HUDWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDWindowController.swift; sourceTree = "<group>"; };
-		58ADA19C9FE2C71B7866A1B1 /* AppleSpeechEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSpeechEngine.swift; sourceTree = "<group>"; };
-		76FAF18A018C3E16DD937C53 /* TranscriptionEngineKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionEngineKind.swift; sourceTree = "<group>"; };
+		6315F57623F787E6FF8D4ABF /* WhisperModelStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhisperModelStorage.swift; sourceTree = "<group>"; };
 		7819F815A60B51EBA25DF3F1 /* KeyboardShortcuts+Names.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardShortcuts+Names.swift"; sourceTree = "<group>"; };
-		7FDEF72645DF21FA21D01973 /* AudioCaptureEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCaptureEngine.swift; sourceTree = "<group>"; };
 		957352367CC878C381FC46FE /* DigoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigoApp.swift; sourceTree = "<group>"; };
 		A994D3E67CF8F0180AF741A0 /* DictationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictationController.swift; sourceTree = "<group>"; };
 		B050ACE45D6FA80994C33B66 /* StatusItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusItemController.swift; sourceTree = "<group>"; };
-		B06B220D9547E75B3FAA87B4 /* SettingsPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPlaceholderView.swift; sourceTree = "<group>"; };
+		C001C227E2D64949AA20A345 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		CA14CC9C1243B0F60CEA172F /* Digo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Digo.entitlements; sourceTree = "<group>"; };
+		D34FEB94C1D2A7EBD56F1FFB /* LaunchAtLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLoginManager.swift; sourceTree = "<group>"; };
+		E06C954845D96FBA85008592 /* WhisperModelCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhisperModelCatalog.swift; sourceTree = "<group>"; };
 		E9D4335BB5E0D7ED9D8095B7 /* Digo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Digo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F416D3775CFEEAE51A44CF7D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F6B07DE407C87E89C110DEBF /* HotkeyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyController.swift; sourceTree = "<group>"; };
+		FA25314BD29EBA751DE8B0E0 /* SettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,8 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				F416D3775CFEEAE51A44CF7D /* AppDelegate.swift */,
-				58ADA19C9FE2C71B7866A1B1 /* AppleSpeechEngine.swift */,
-				7FDEF72645DF21FA21D01973 /* AudioCaptureEngine.swift */,
+				1863B8A3E91E9B336663639A /* Assets.xcassets */,
 				A994D3E67CF8F0180AF741A0 /* DictationController.swift */,
 				CA14CC9C1243B0F60CEA172F /* Digo.entitlements */,
 				957352367CC878C381FC46FE /* DigoApp.swift */,
@@ -87,13 +88,15 @@
 				58A61CF0A9B7B3FCAA7B92D7 /* HUDWindowController.swift */,
 				53F209881B3E122308E812A0 /* Info.plist */,
 				7819F815A60B51EBA25DF3F1 /* KeyboardShortcuts+Names.swift */,
+				D34FEB94C1D2A7EBD56F1FFB /* LaunchAtLoginManager.swift */,
 				45B71566E28B79540B6748FB /* PermissionsManager.swift */,
-				B06B220D9547E75B3FAA87B4 /* SettingsPlaceholderView.swift */,
+				C001C227E2D64949AA20A345 /* SettingsView.swift */,
+				FA25314BD29EBA751DE8B0E0 /* SettingsWindowController.swift */,
 				B050ACE45D6FA80994C33B66 /* StatusItemController.swift */,
 				0D17C0DADD512C7029B2ADC0 /* TextDeliveryService.swift */,
-				3503DC8DF59D83FF4A7F4284 /* TranscriptionEngine.swift */,
-				76FAF18A018C3E16DD937C53 /* TranscriptionEngineKind.swift */,
 				35E99CFA6A04D65F86589FBB /* WhisperKitEngine.swift */,
+				E06C954845D96FBA85008592 /* WhisperModelCatalog.swift */,
+				6315F57623F787E6FF8D4ABF /* WhisperModelStorage.swift */,
 			);
 			path = Digo;
 			sourceTree = "<group>";
@@ -114,6 +117,7 @@
 			buildConfigurationList = EDC43E5917C53D758CD328C4 /* Build configuration list for PBXNativeTarget "Digo" */;
 			buildPhases = (
 				40C9E62B12A1FEF421AC223A /* Sources */,
+				4ABBF9AE328BB0A1D0929739 /* Resources */,
 				618A393139CBFEAC5C6046BC /* Frameworks */,
 			);
 			buildRules = (
@@ -166,14 +170,23 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		4ABBF9AE328BB0A1D0929739 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9EB3246A8D066EDC906DCE3F /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		40C9E62B12A1FEF421AC223A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				39129DB687803F32B5DE3B52 /* AppDelegate.swift in Sources */,
-				C6BDBE8A1E91907509243B71 /* AppleSpeechEngine.swift in Sources */,
-				801245F2C976785CB52681D5 /* AudioCaptureEngine.swift in Sources */,
 				B37271371FCBED622D027F3C /* DictationController.swift in Sources */,
 				2468B5F1F593DA5899E14319 /* DigoApp.swift in Sources */,
 				0FDDA831292E8B41758324F4 /* HUDView.swift in Sources */,
@@ -181,13 +194,15 @@
 				19D324250797B0D84B9CC2D6 /* HUDWindowController.swift in Sources */,
 				BC5223B22C179A669C85F9DE /* HotkeyController.swift in Sources */,
 				A709495E88D9B56F1CF22FC0 /* KeyboardShortcuts+Names.swift in Sources */,
+				B543123D7C1CD042D25B5104 /* LaunchAtLoginManager.swift in Sources */,
 				9795C276E71AEC39BAB0C839 /* PermissionsManager.swift in Sources */,
-				55FD6ED53757BA134989F7EF /* SettingsPlaceholderView.swift in Sources */,
+				835CA7D168540E95DF8E4A0A /* SettingsView.swift in Sources */,
+				7E1C1D3F523440C5C3980219 /* SettingsWindowController.swift in Sources */,
 				3E2638097BA3B1B92F67CA70 /* StatusItemController.swift in Sources */,
 				0D35DCFB7B6795B2032F38F7 /* TextDeliveryService.swift in Sources */,
-				FCC103E710BF896D8E8B386C /* TranscriptionEngine.swift in Sources */,
-				AFF6571F28F910F4AB38914C /* TranscriptionEngineKind.swift in Sources */,
 				6DB8F95306B2CE35FE377992 /* WhisperKitEngine.swift in Sources */,
+				90C97DD021767E8DC2FB5180 /* WhisperModelCatalog.swift in Sources */,
+				FEC24D01E202777223AF09DE /* WhisperModelStorage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

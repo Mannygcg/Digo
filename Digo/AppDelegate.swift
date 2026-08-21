@@ -5,9 +5,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private static let logger = Logger(subsystem: "com.manuelcabrera.Digo", category: "AppDelegate")
 
     private var statusItemController: StatusItemController?
-    private var dictationController: DictationController?
+    private(set) var dictationController: DictationController?
     private var hotkeyController: HotkeyController?
     private var hudWindowController: HUDWindowController?
+    private var settingsWindowController: SettingsWindowController?
     private let textDeliveryService = TextDeliveryService()
 
     func applicationDidFinishLaunching(_ notification: Notification) {
@@ -18,7 +19,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let dictationController = DictationController()
         self.dictationController = dictationController
 
-        let statusItemController = StatusItemController(dictationController: dictationController)
+        let settingsWindowController = SettingsWindowController(dictationController: dictationController)
+        self.settingsWindowController = settingsWindowController
+
+        let statusItemController = StatusItemController(
+            dictationController: dictationController,
+            onOpenSettings: { settingsWindowController.show() }
+        )
         self.statusItemController = statusItemController
 
         let hudWindowController = HUDWindowController()

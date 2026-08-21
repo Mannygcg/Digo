@@ -1,5 +1,4 @@
 import Foundation
-import Speech
 import os
 
 enum DictationState {
@@ -8,35 +7,55 @@ enum DictationState {
     case transcribing
 }
 
-final class DictationController {
+final class DictationController: ObservableObject {
     private static let logger = Logger(subsystem: "com.manuelcabrera.Digo", category: "DictationController")
-    private static let selectedEngineDefaultsKey = "selectedEngine"
+    private static let selectedModelDefaultsKey = "selectedWhisperModel"
+    private static let enabledModelsDefaultsKey = "enabledWhisperModels"
 
-    private let audioCaptureEngine = AudioCaptureEngine()
-    private let appleSpeechEngine = AppleSpeechEngine()
-    private let whisperKitEngine = WhisperKitEngine()
+    private var engines: [String: WhisperKitEngine] = [:]
 
-    private var activeEngine: TranscriptionEngine {
-        switch selectedEngineKind {
-        case .appleSpeech: return appleSpeechEngine
-        case .whisperKit: return whisperKitEngine
+    private func engine(for modelID: String) -> WhisperKitEngine {
+        if let existing = engines[modelID] {
+            return existing
         }
+        let engine = WhisperKitEngine(modelName: modelID)
+        engines[modelID] = engine
+        return engine
     }
 
-    var selectedEngineKind: TranscriptionEngineKind {
-        get {
-            TranscriptionEngineKind(rawValue: UserDefaults.standard.string(forKey: Self.selectedEngineDefaultsKey) ?? "") ?? .appleSpeech
-        }
-        set {
-            UserDefaults.standard.set(newValue.rawValue, forKey: Self.selectedEngineDefaultsKey)
-            if newValue == .whisperKit {
-                whisperKitEngine.preload()
-            }
+    private var activeEngine: WhisperKitEngine { engine(for: selectedModelID) }
+
+    /// Models available in the Engine menu. Adding one here doesn't download it —
+    /// that only happens the first time it's actually selected.
+    @Published var enabledModelIDs: [String] {
+        didSet { UserDefaults.standard.set(enabledModelIDs, forKey: Self.enabledModelsDefaultsKey) }
+    }
+
+    func addEnabledModel(_ modelID: String) {
+        guard !enabledModelIDs.contains(modelID) else { return }
+        enabledModelIDs.append(modelID)
+    }
+
+    @Published var selectedModelID: String {
+        didSet {
+            UserDefaults.standard.set(selectedModelID, forKey: Self.selectedModelDefaultsKey)
+            engine(for: selectedModelID).preload()
         }
     }
 
     private(set) var state: DictationState = .idle {
         didSet { onStateChange?(state) }
+    }
+
+    private static let recentTranscriptsLimit = 3
+    @Published private(set) var recentTranscripts: [String] = []
+
+    private func recordTranscript(_ text: String) {
+        guard !text.isEmpty else { return }
+        recentTranscripts.insert(text, at: 0)
+        if recentTranscripts.count > Self.recentTranscriptsLimit {
+            recentTranscripts.removeLast(recentTranscripts.count - Self.recentTranscriptsLimit)
+        }
     }
 
     var onStateChange: ((DictationState) -> Void)?
@@ -45,35 +64,17 @@ final class DictationController {
     var onEngineError: ((Error) -> Void)?
 
     init() {
-        if selectedEngineKind == .whisperKit {
-            whisperKitEngine.preload()
-        }
-        audioCaptureEngine.onBuffer = { [weak self] buffer in
-            self?.activeEngine.appendAudio(buffer)
-        }
-        var levelLogCount = 0
-        audioCaptureEngine.onLevel = { level in
-            levelLogCount += 1
-            if levelLogCount % 5 == 0 {
-                Self.logger.debug("level: \(level, privacy: .public)")
-            }
-        }
+        enabledModelIDs = UserDefaults.standard.stringArray(forKey: Self.enabledModelsDefaultsKey)
+            ?? WhisperModelCatalog.all.filter(\.isDefault).map(\.id)
+        selectedModelID = UserDefaults.standard.string(forKey: Self.selectedModelDefaultsKey)
+            ?? WhisperModelCatalog.defaultSelection
+        engine(for: selectedModelID).preload()
     }
 
     func toggle() {
         switch state {
         case .idle:
-            if selectedEngineKind == .appleSpeech {
-                requestAuthorizationIfNeeded { [weak self] authorized in
-                    guard authorized else {
-                        Self.logger.error("Speech recognition not authorized")
-                        return
-                    }
-                    self?.start()
-                }
-            } else {
-                start()
-            }
+            start()
         case .listening:
             stop()
         case .transcribing:
@@ -81,23 +82,8 @@ final class DictationController {
         }
     }
 
-    private func requestAuthorizationIfNeeded(_ completion: @escaping (Bool) -> Void) {
-        switch SFSpeechRecognizer.authorizationStatus() {
-        case .authorized:
-            completion(true)
-        case .notDetermined:
-            SFSpeechRecognizer.requestAuthorization { status in
-                DispatchQueue.main.async { completion(status == .authorized) }
-            }
-        case .denied, .restricted:
-            completion(false)
-        @unknown default:
-            completion(false)
-        }
-    }
-
     private func start() {
-        Self.logger.debug("start() called, engine=\(self.selectedEngineKind.rawValue, privacy: .public)")
+        Self.logger.debug("start() called, engine=\(self.selectedModelID, privacy: .public)")
         do {
             try activeEngine.startStreaming(
                 onPartial: { [weak self] text in
@@ -107,6 +93,7 @@ final class DictationController {
                 onFinal: { [weak self] text in
                     Self.logger.debug("final: \(text, privacy: .public)")
                     DispatchQueue.main.async {
+                        self?.recordTranscript(text)
                         self?.onFinalTranscript?(text)
                         self?.state = .idle
                     }
@@ -119,7 +106,6 @@ final class DictationController {
                     }
                 }
             )
-            try audioCaptureEngine.start()
             state = .listening
             Self.logger.debug("state -> listening")
         } catch {
@@ -129,7 +115,6 @@ final class DictationController {
 
     private func stop() {
         Self.logger.debug("stop() called")
-        audioCaptureEngine.stop()
         activeEngine.stopStreaming()
         state = .transcribing
     }

@@ -5,8 +5,12 @@ struct HUDView: View {
 
     var body: some View {
         HStack(spacing: 10) {
-            Image(systemName: "waveform")
-                .foregroundStyle(.red)
+            Image("MenuBarIcon")
+                .renderingMode(.template)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 20, height: 20)
+                .foregroundStyle(.primary)
             Text(viewModel.text.isEmpty ? "Listening…" : viewModel.text)
                 .font(.system(size: 14))
                 .lineLimit(2)
