@@ -10,6 +10,7 @@ final class WhisperKitEngine: TranscriptionEngine {
     private var loadTask: Task<WhisperKit, Error>?
     private var converter: AVAudioConverter?
     private var samples: [Float] = []
+    private var sessionID = 0
 
     private var onFinalHandler: ((String) -> Void)?
     private var onErrorHandler: ((Error) -> Void)?
@@ -23,6 +24,7 @@ final class WhisperKitEngine: TranscriptionEngine {
     func startStreaming(onPartial: @escaping (String) -> Void,
                          onFinal: @escaping (String) -> Void,
                          onError: @escaping (Error) -> Void) throws {
+        sessionID += 1
         samples = []
         converter = nil
         onFinalHandler = onFinal
@@ -57,6 +59,7 @@ final class WhisperKitEngine: TranscriptionEngine {
     }
 
     func stopStreaming() {
+        let session = sessionID
         let capturedSamples = samples
         let onFinal = onFinalHandler
         let onError = onErrorHandler
@@ -71,10 +74,17 @@ final class WhisperKitEngine: TranscriptionEngine {
             do {
                 let kit = try await loadedWhisperKit().value
                 let results = try await kit.transcribe(audioArray: capturedSamples)
+                // A new session may have started while this transcription was running —
+                // drop the result instead of delivering a stale transcript into it.
+                guard session == self.sessionID else {
+                    Self.logger.debug("Discarding transcription from superseded session")
+                    return
+                }
                 let text = results.map(\.text).joined(separator: " ").trimmingCharacters(in: .whitespacesAndNewlines)
                 Self.logger.debug("Whisper final: \(text, privacy: .public)")
                 onFinal?(text)
             } catch {
+                guard session == self.sessionID else { return }
                 Self.logger.error("Whisper transcription failed: \(String(describing: error), privacy: .public)")
                 onError?(error)
             }

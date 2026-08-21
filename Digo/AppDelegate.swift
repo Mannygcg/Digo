@@ -28,9 +28,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         dictationController.onStateChange = { [weak self, weak statusItemController, weak hudWindowController] state in
             statusItemController?.updateUI(for: state)
-            if state == .listening {
+            switch state {
+            case .listening:
                 hudWindowController?.show()
                 self?.textDeliveryService.beginLiveSession()
+            case .transcribing:
+                hudWindowController?.update(text: "Refining…")
+            case .idle:
+                break
             }
         }
         dictationController.onPartialTranscript = { [weak self, weak hudWindowController] text in
@@ -39,8 +44,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
         dictationController.onFinalTranscript = { [weak self, weak hudWindowController] text in
             Self.logger.debug("Final transcript: \(text, privacy: .public)")
-            hudWindowController?.update(text: text)
             self?.textDeliveryService.finishLiveSession(with: text)
+            hudWindowController?.update(text: "Ready!")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
                 hudWindowController?.hide()
             }

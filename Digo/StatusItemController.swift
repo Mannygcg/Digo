@@ -61,6 +61,7 @@ final class StatusItemController: NSObject {
     }
 
     func updateUI(for state: DictationState) {
+        toggleItem.isEnabled = state != .transcribing
         switch state {
         case .idle:
             toggleItem.title = "Start Dictation"
@@ -68,6 +69,9 @@ final class StatusItemController: NSObject {
         case .listening:
             toggleItem.title = "Stop Dictation"
             statusItem.button?.image = NSImage(systemSymbolName: "mic.fill", accessibilityDescription: "Digo (listening)")
+        case .transcribing:
+            toggleItem.title = "Transcribing…"
+            statusItem.button?.image = NSImage(systemSymbolName: "waveform", accessibilityDescription: "Digo (transcribing)")
         }
     }
 

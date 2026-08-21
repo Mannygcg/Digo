@@ -5,6 +5,7 @@ import os
 enum DictationState {
     case idle
     case listening
+    case transcribing
 }
 
 final class DictationController {
@@ -75,6 +76,8 @@ final class DictationController {
             }
         case .listening:
             stop()
+        case .transcribing:
+            break
         }
     }
 
@@ -103,11 +106,17 @@ final class DictationController {
                 },
                 onFinal: { [weak self] text in
                     Self.logger.debug("final: \(text, privacy: .public)")
-                    DispatchQueue.main.async { self?.onFinalTranscript?(text) }
+                    DispatchQueue.main.async {
+                        self?.onFinalTranscript?(text)
+                        self?.state = .idle
+                    }
                 },
                 onError: { [weak self] error in
                     Self.logger.error("Transcription error: \(String(describing: error), privacy: .public)")
-                    DispatchQueue.main.async { self?.onEngineError?(error) }
+                    DispatchQueue.main.async {
+                        self?.onEngineError?(error)
+                        self?.state = .idle
+                    }
                 }
             )
             try audioCaptureEngine.start()
@@ -122,6 +131,6 @@ final class DictationController {
         Self.logger.debug("stop() called")
         audioCaptureEngine.stop()
         activeEngine.stopStreaming()
-        state = .idle
+        state = .transcribing
     }
 }

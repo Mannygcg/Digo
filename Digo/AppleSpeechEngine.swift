@@ -20,6 +20,7 @@ final class AppleSpeechEngine: TranscriptionEngine {
         request.shouldReportPartialResults = true
         request.requiresOnDeviceRecognition = true
         request.addsPunctuation = true
+        request.taskHint = .dictation
         self.request = request
 
         task = recognizer.recognitionTask(with: request) { [weak self] result, error in
