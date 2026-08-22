@@ -1,0 +1,72 @@
+name: Build & Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        run: xcodegen generate
+
+      - name: Determine version
+        id: version
+        run: |
+          if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
+            VERSION="${GITHUB_REF_NAME#v}"
+          else
+            VERSION="0.0.0-dev"
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Archive (unsigned)
+        run: |
+          xcodebuild archive \
+            -project Digo.xcodeproj \
+            -scheme Digo \
+            -configuration Release \
+            -archivePath build/Digo.xcarchive \
+            -destination "generic/platform=macOS" \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            MARKETING_VERSION="${{ steps.version.outputs.version }}"
+
+      - name: Export app + ad-hoc sign
+        run: |
+          mkdir -p build/export
+          cp -R "build/Digo.xcarchive/Products/Applications/Digo.app" build/export/
+          codesign --force --deep --sign - "build/export/Digo.app"
+
+      - name: Create DMG
+        run: |
+          hdiutil create -volname "Digo" \
+            -srcfolder build/export/Digo.app \
+            -ov -format UDZO \
+            "build/Digo-${{ steps.version.outputs.version }}.dmg"
+
+      - name: Upload artifact (manual runs)
+        if: github.ref_type != 'tag'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Digo-dev-build
+          path: build/Digo-*.dmg
+
+      - name: Create GitHub Release
+        if: github.ref_type == 'tag'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/Digo-*.dmg
+          generate_release_notes: true
+          body: |
+            Digo isn't notarized (no paid Apple Developer account — this project is free and community-run), so macOS will flag it as from an unidentified developer on first launch. Right-click **Digo.app** and choose **Open** once to confirm, then it launches normally from then on.
