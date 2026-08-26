@@ -221,6 +221,24 @@
   }
   .stamp span.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
 
+  .keys {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 4px 0 2px;
+  }
+  .keycap {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    border: 2px solid var(--ink);
+    border-radius: 7px;
+    padding: 3px 9px;
+    background: var(--paper-raised);
+    box-shadow: 2px 2px 0 var(--line-strong);
+  }
+  .keys .plus { font-family: var(--font-mono); color: var(--ink-faint); font-size: 13px; }
+
   .hero h1 {
     font-size: clamp(40px, 6vw, 68px);
     line-height: 1.04;
@@ -534,7 +552,7 @@
         <div class="card r5">
           <svg class="icon"><use href="#icon-key"/></svg>
           <h3>One tap to start</h3>
-          <p>A single hotkey or a click on the menu bar icon starts and stops listening. That's the whole ritual.</p>
+          <p>Control + Space by default, or a click on the menu bar icon. Change the shortcut anytime in Settings.</p>
         </div>
         <div class="card r6">
           <svg class="icon"><use href="#icon-bubbles"/></svg>
@@ -557,7 +575,8 @@
           <span class="step-num">1</span>
           <svg class="icon"><use href="#icon-key"/></svg>
           <h3>Press your hotkey</h3>
-          <p>Wake Digo from the menu bar or a single keystroke, wherever your cursor happens to be.</p>
+          <p class="keys"><span class="keycap">&#8963;</span><span class="plus">+</span><span class="keycap">Space</span></p>
+          <p>That's the default — wake Digo from anywhere, or set your own in Settings.</p>
         </div>
         <div class="step">
           <span class="step-num">2</span>

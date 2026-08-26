@@ -60,10 +60,33 @@ jobs:
 
       - name: Create DMG
         run: |
-          hdiutil create -volname "Digo" \
-            -srcfolder build/export/Digo.app \
-            -ov -format UDZO \
-            "build/Digo-${{ steps.version.outputs.version }}.dmg"
+          brew install create-dmg
+          mkdir -p build/dmg-source
+          cp -R build/export/Digo.app build/dmg-source/
+          VERSION="${{ steps.version.outputs.version }}"
+          rm -f "build/Digo-$VERSION.dmg"
+
+          # create-dmg drives Finder via AppleScript, which can exit non-zero
+          # even when it actually succeeds — check for the real file after.
+          create-dmg \
+            --volname "Digo" \
+            --background "dmg-assets/background.png" \
+            --window-size 660 400 \
+            --icon-size 128 \
+            --icon "Digo.app" 180 185 \
+            --app-drop-link 480 185 \
+            --hide-extension "Digo.app" \
+            --no-internet-enable \
+            "build/Digo-$VERSION.dmg" \
+            "build/dmg-source" || true
+
+          if [ ! -f "build/Digo-$VERSION.dmg" ]; then
+            echo "create-dmg didn't produce a file — falling back to a plain hdiutil dmg"
+            hdiutil create -volname "Digo" \
+              -srcfolder build/export/Digo.app \
+              -ov -format UDZO \
+              "build/Digo-$VERSION.dmg"
+          fi
 
       - name: Upload artifact (manual runs)
         if: github.ref_type != 'tag'
