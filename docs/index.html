@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Digo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@400;600;700;800&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  /* ============ TOKENS ============ */
+  :root {
+    --paper: #ECE8DE;
+    --paper-raised: #F8F5EC;
+    --ink: #18150F;
+    --ink-soft: #58523F;
+    --ink-faint: #8B846E;
+    --accent: #FFCC33;
+    --accent-ink: #18150F;
+    --line: rgba(24,21,15,0.18);
+    --line-strong: rgba(24,21,15,0.55);
+    --shadow: rgba(24,21,15,0.16);
+
+    --font-display: 'Shantell Sans', 'Bradley Hand', 'Segoe Print', cursive;
+    --font-body: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+    --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Menlo, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #141210;
+      --paper-raised: #1D1A16;
+      --ink: #F2EEE3;
+      --ink-soft: #B9B1A0;
+      --ink-faint: #837C6B;
+      --accent: #FFD84D;
+      --accent-ink: #141210;
+      --line: rgba(242,238,227,0.2);
+      --line-strong: rgba(242,238,227,0.6);
+      --shadow: rgba(0,0,0,0.55);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #141210;
+    --paper-raised: #1D1A16;
+    --ink: #F2EEE3;
+    --ink-soft: #B9B1A0;
+    --ink-faint: #837C6B;
+    --accent: #FFD84D;
+    --accent-ink: #141210;
+    --line: rgba(242,238,227,0.2);
+    --line-strong: rgba(242,238,227,0.6);
+    --shadow: rgba(0,0,0,0.55);
+  }
+
+  /* ============ BASE ============ */
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.55;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image: radial-gradient(circle at 1px 1px, var(--line) 1px, transparent 0);
+    background-size: 26px 26px;
+    opacity: 0.55;
+  }
+
+  main, header, footer { position: relative; z-index: 1; }
+
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 700; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  a { color: inherit; }
+  img, svg { display: block; max-width: 100%; }
+
+  .wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 2px var(--line);
+  }
+
+  .sketchy { filter: url(#inkwobble); }
+
+  :focus-visible {
+    outline: 2.5px dashed var(--ink);
+    outline-offset: 3px;
+  }
+
+  /* ============ BUTTONS / FORM ============ */
+  .btn {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 15.5px;
+    text-decoration: none;
+    border: 2.2px solid var(--ink);
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+    padding: 12px 24px;
+    cursor: pointer;
+    background: var(--paper-raised);
+    color: var(--ink);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 3px 3px 0 var(--line-strong);
+  }
+  .btn:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--line-strong); }
+  .btn:active { transform: translate(0,0); box-shadow: 1px 1px 0 var(--line-strong); }
+  .btn-accent { background: var(--accent); color: var(--accent-ink); border-color: var(--ink); }
+
+  .field-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .field {
+    font-family: var(--font-body);
+    font-size: 15.5px;
+    padding: 12px 16px;
+    border: 2.2px solid var(--ink);
+    border-radius: 14px;
+    background: var(--paper-raised);
+    color: var(--ink);
+    min-width: 240px;
+    flex: 1 1 240px;
+  }
+  .field::placeholder { color: var(--ink-faint); }
+
+  .microcopy { font-size: 13.5px; color: var(--ink-faint); margin-top: 10px; }
+
+  .success-note {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 14.5px;
+    padding: 12px 16px;
+    border: 2px dashed var(--ink);
+    border-radius: 14px;
+    background: var(--paper-raised);
+  }
+  .success-note.show { display: inline-flex; }
+  form.hidden { display: none; }
+
+  /* ============ NAV ============ */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--paper);
+    border-bottom: 2.5px dashed var(--line-strong);
+  }
+  .nav .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    gap: 16px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .footer-brand { text-decoration: none; }
+  .brand-mark { width: 34px; height: 34px; color: var(--ink); }
+  .brand-word { font-family: var(--font-display); font-weight: 800; font-size: 22px; }
+  .nav-links {
+    display: flex;
+    gap: 26px;
+    font-family: var(--font-mono);
+    font-size: 13.5px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+  .nav-links a { text-decoration: none; color: var(--ink-soft); border-bottom: 2px solid transparent; padding-bottom: 2px; }
+  .nav-links a:hover { color: var(--ink); border-color: var(--accent); }
+  .nav-cta { display: none; }
+  @media (min-width: 720px) { .nav-cta { display: inline-flex; } }
+  @media (max-width: 719px) { .nav-links { display: none; } }
+
+  /* ============ HERO ============ */
+  .hero { padding: 64px 0 80px; }
+  .hero .wrap {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 48px;
+    align-items: center;
+  }
+  @media (max-width: 860px) {
+    .hero .wrap { grid-template-columns: 1fr; }
+  }
+
+  .stamp {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    padding: 6px 14px;
+    transform: rotate(-2.5deg);
+    margin-bottom: 22px;
+  }
+  .stamp span.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+
+  .hero h1 {
+    font-size: clamp(40px, 6vw, 68px);
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+  }
+  .hero h1 mark {
+    background: none;
+    color: inherit;
+    position: relative;
+    white-space: nowrap;
+  }
+  .hero h1 mark::after {
+    content: "";
+    position: absolute;
+    left: -3px; right: -3px; bottom: 2px;
+    height: 0.4em;
+    background: var(--accent);
+    z-index: -1;
+    transform: rotate(-1deg);
+  }
+
+  .hero p.lede {
+    font-size: 18px;
+    color: var(--ink-soft);
+    max-width: 46ch;
+    margin-top: 22px;
+  }
+
+  .hero-actions { margin-top: 30px; }
+
+  .hero-art {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+  .hero-card {
+    position: relative;
+    background: var(--paper-raised);
+    border: 2.5px solid var(--ink);
+    border-radius: 26px 130px 26px 130px/130px 26px 130px 26px;
+    padding: 30px;
+    transform: rotate(2.2deg);
+    box-shadow: 6px 6px 0 var(--line-strong);
+    max-width: 360px;
+  }
+  .hero-bubble {
+    position: absolute;
+    top: -18px;
+    right: 8px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    padding: 6px 14px;
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    transform: rotate(6deg);
+  }
+
+  /* ============ SECTION HEADS ============ */
+  .section { padding: 76px 0; border-top: 2.5px dashed var(--line); }
+  .section-head { max-width: 640px; margin-bottom: 48px; }
+  .section-head h2 { font-size: clamp(28px, 4vw, 40px); margin-top: 12px; }
+
+  /* ============ FEATURES ============ */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 900px) { .feature-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 600px) { .feature-grid { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--paper-raised);
+    border: 2.2px solid var(--ink);
+    padding: 26px 22px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    box-shadow: 4px 4px 0 var(--line-strong);
+  }
+  .card:hover { transform: rotate(0deg) translateY(-3px); box-shadow: 6px 6px 0 var(--line-strong); }
+  .card .icon { width: 38px; height: 38px; color: var(--ink); margin-bottom: 16px; }
+  .card h3 { font-size: 19px; margin-bottom: 8px; }
+  .card p { color: var(--ink-soft); font-size: 15px; }
+
+  .card.r1 { border-radius: 22px 90px 22px 22px/90px 22px 22px 22px; transform: rotate(-1deg); }
+  .card.r2 { border-radius: 22px 22px 90px 22px/22px 22px 90px 22px; transform: rotate(0.8deg); }
+  .card.r3 { border-radius: 90px 22px 22px 22px/22px 90px 22px 22px; transform: rotate(-0.6deg); }
+  .card.r4 { border-radius: 22px 22px 22px 90px/22px 22px 22px 90px; transform: rotate(1.2deg); }
+  .card.r5 { border-radius: 22px 90px 22px 22px/90px 22px 22px 22px; transform: rotate(0.5deg); }
+  .card.r6 { border-radius: 90px 22px 22px 22px/22px 90px 22px 22px; transform: rotate(-1.4deg); }
+
+  /* ============ HOW IT WORKS ============ */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    position: relative;
+  }
+  @media (max-width: 780px) { .steps { grid-template-columns: 1fr; } }
+  .step { text-align: left; }
+  .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    border: 2.2px solid var(--ink);
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 16px;
+    background: var(--paper-raised);
+  }
+  .step .icon { width: 46px; height: 46px; color: var(--ink); margin: 6px 0 14px; }
+  .step h3 { font-size: 20px; margin-bottom: 8px; }
+  .step p { color: var(--ink-soft); font-size: 15px; max-width: 30ch; }
+
+  /* ============ WHO IT'S FOR ============ */
+  .for-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 900px) { .for-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 520px) { .for-grid { grid-template-columns: 1fr; } }
+  .for-card {
+    border: 2px dashed var(--line-strong);
+    border-radius: 16px;
+    padding: 20px;
+  }
+  .for-card h3 { font-size: 16.5px; margin-bottom: 6px; font-family: var(--font-body); font-weight: 700; }
+  .for-card p { font-size: 14px; color: var(--ink-soft); }
+
+  /* ============ WAITLIST ============ */
+  .postcard {
+    background: var(--paper-raised);
+    border: 2.5px solid var(--ink);
+    border-radius: 30px;
+    padding: 44px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: center;
+    box-shadow: 7px 7px 0 var(--line-strong);
+  }
+  @media (max-width: 760px) { .postcard { grid-template-columns: 1fr; text-align: left; } }
+  .postcard h2 { font-size: clamp(26px, 3.6vw, 34px); }
+  .postcard p.lede { color: var(--ink-soft); margin-top: 12px; max-width: 48ch; }
+  .postcard .icon-big { width: 96px; height: 96px; color: var(--ink); justify-self: center; }
+  .postcard form { margin-top: 24px; max-width: 420px; }
+
+  /* ============ FOOTER ============ */
+  footer { padding: 46px 0 40px; }
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-bottom: 24px;
+    border-bottom: 2.5px dashed var(--line);
+  }
+  .footer-brand { display: flex; align-items: center; gap: 10px; }
+  .footer-brand .brand-mark { width: 26px; height: 26px; }
+  .footer-brand .brand-word { font-size: 18px; }
+  .footer-tagline { font-family: var(--font-mono); font-size: 13px; color: var(--ink-faint); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-top: 22px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--ink-faint);
+  }
+  .back-top { text-decoration: none; color: var(--ink-soft); }
+  .hero-bubble { text-decoration: none; }
+  .back-top:hover { color: var(--ink); }
+</style>
+
+<!-- SVG defs: hand-drawn wobble filter + reusable mascot -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="inkwobble" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="7" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3.2"/>
+    </filter>
+
+    <symbol id="mascot" viewBox="0 0 200 250">
+      <g class="sketchy" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+        <!-- mic head/body -->
+        <rect x="55" y="18" width="90" height="128" rx="45"/>
+        <!-- grille cross-hatch -->
+        <line x1="68" y1="46" x2="132" y2="46"/>
+        <line x1="68" y1="60" x2="132" y2="60"/>
+        <line x1="68" y1="74" x2="132" y2="74"/>
+        <line x1="82" y1="34" x2="118" y2="88"/>
+        <line x1="118" y1="34" x2="82" y2="88"/>
+        <!-- eyes -->
+        <circle cx="82" cy="108" r="4.5" fill="currentColor" stroke="none"/>
+        <circle cx="118" cy="108" r="4.5" fill="currentColor" stroke="none"/>
+        <!-- smile -->
+        <path d="M84 122 Q100 132 116 122"/>
+        <!-- stem + stand -->
+        <line x1="100" y1="146" x2="100" y2="188"/>
+        <path d="M66 188 Q100 206 134 188"/>
+        <!-- waving arm -->
+        <path d="M145 100 Q175 92 172 66"/>
+        <circle cx="172" cy="60" r="8"/>
+        <!-- sound waves -->
+        <path d="M18 90 Q6 108 18 126" stroke-width="4"/>
+        <path d="M32 78 Q12 108 32 138" stroke-width="4"/>
+      </g>
+    </symbol>
+
+    <symbol id="icon-window" viewBox="0 0 40 40">
+      <g class="sketchy" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="5" y="8" width="30" height="24" rx="4"/>
+        <line x1="5" y1="15" x2="35" y2="15"/>
+        <path d="M13 24 q3 -6 6 0 q3 -8 6 0 q3 -5 6 0"/>
+      </g>
+    </symbol>
+    <symbol id="icon-broom" viewBox="0 0 40 40">
+      <g class="sketchy" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 8 L30 24"/>
+        <path d="M22 16 L9 29 q-2 2 0 4 q2 2 4 0 L26 20"/>
+        <path d="M6 33 l6 -6 M10 35 l6 -6 M14 36.5 l5.5 -5.5"/>
+      </g>
+    </symbol>
+    <symbol id="icon-lock" viewBox="0 0 40 40">
+      <g class="sketchy" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="9" y="18" width="22" height="16" rx="3"/>
+        <path d="M13 18 v-4 a7 7 0 0 1 14 0 v4"/>
+        <circle cx="20" cy="25" r="2" fill="currentColor" stroke="none"/>
+      </g>
+    </symbol>
+    <symbol id="icon-book" viewBox="0 0 40 40">
+      <g class="sketchy" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 12 c-4 -4 -10 -4 -14 -2 v20 c4 -2 10 -2 14 2 c4 -4 10 -4 14 -2 v-20 c-4 -2 -10 -2 -14 2 z"/>
+        <line x1="20" y1="12" x2="20" y2="32"/>
+        <path d="M27 8 v6 M24 11 h6"/>
+      </g>
+    </symbol>
+    <symbol id="icon-key" viewBox="0 0 40 40">
+      <g class="sketchy" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="6" y="10" width="28" height="20" rx="5"/>
+        <circle cx="20" cy="20" r="3" fill="currentColor" stroke="none"/>
+      </g>
+    </symbol>
+    <symbol id="icon-bubbles" viewBox="0 0 40 40">
+      <g class="sketchy" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 10 h18 a3 3 0 0 1 3 3 v9 a3 3 0 0 1 -3 3 h-9 l-6 5 v-5 h-3 a3 3 0 0 1 -3 -3 v-9 a3 3 0 0 1 3 -3 z"/>
+        <path d="M22 24 h9 a3 3 0 0 0 3 -3 v-6 a3 3 0 0 0 -3 -3 h-3" opacity="0.75"/>
+      </g>
+    </symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24">
+      <g class="sketchy" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 13 l5 6 L20 6"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top">
+      <svg class="brand-mark" viewBox="0 0 200 250"><use href="#mascot"/></svg>
+      <span class="brand-word">Digo</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#for">Who it's for</a>
+    </nav>
+    <a class="btn btn-accent nav-cta" href="#waitlist">Get early access</a>
+  </div>
+</header>
+
+<main id="top">
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <span class="stamp"><span class="dot"></span>Coming soon — macOS</span>
+        <h1>Just talk.<br><mark>Digo</mark> writes it down.</h1>
+        <p class="lede">Digo listens system-wide, quietly cleans up your rambling, and drops tidy text into whatever you're working on. No cloud round-trip, no retyping, no boring transcripts.</p>
+        <div class="hero-actions">
+          <form id="hero-form" class="field-row" novalidate>
+            <input class="field" type="email" required placeholder="you@somewhere.com" aria-label="Email address">
+            <button type="submit" class="btn btn-accent">Get early access</button>
+          </form>
+          <p class="success-note" id="hero-success"><svg width="16" height="16" viewBox="0 0 24 24"><use href="#icon-check"/></svg> You're on the list — we'll be in touch.</p>
+          <p class="microcopy">Early testers get first pick of the beta. No spam, ever.</p>
+        </div>
+      </div>
+      <div class="hero-art">
+        <div class="hero-card">
+          <span class="hero-bubble">hi, I'm Digo!</span>
+          <svg viewBox="0 0 200 250" style="width:100%;color:var(--ink)"><use href="#mascot"/></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURES ============ -->
+  <section class="section" id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">What Digo does</span>
+        <h2>Six reasons to stop typing</h2>
+      </div>
+      <div class="feature-grid">
+        <div class="card r1">
+          <svg class="icon"><use href="#icon-window"/></svg>
+          <h3>Speak anywhere</h3>
+          <p>One shortcut wakes Digo from the menu bar, in any app — your text editor, your inbox, your terminal.</p>
+        </div>
+        <div class="card r2">
+          <svg class="icon"><use href="#icon-broom"/></svg>
+          <h3>Cleans up as you go</h3>
+          <p>Filler words and stutters get quietly trimmed. Punctuation and casing happen automatically.</p>
+        </div>
+        <div class="card r3">
+          <svg class="icon"><use href="#icon-lock"/></svg>
+          <h3>Stays on your Mac</h3>
+          <p>Transcription runs on-device, so nothing you say ever leaves your laptop to get there.</p>
+        </div>
+        <div class="card r4">
+          <svg class="icon"><use href="#icon-book"/></svg>
+          <h3>Learns your words</h3>
+          <p>Teach Digo names, jargon, and acronyms once, and it stops guessing every time after.</p>
+        </div>
+        <div class="card r5">
+          <svg class="icon"><use href="#icon-key"/></svg>
+          <h3>One tap to start</h3>
+          <p>A single hotkey or a click on the menu bar icon starts and stops listening. That's the whole ritual.</p>
+        </div>
+        <div class="card r6">
+          <svg class="icon"><use href="#icon-bubbles"/></svg>
+          <h3>Built for real talk</h3>
+          <p>Handles pauses, tangents, and long rambles without losing the thread of what you meant.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW IT WORKS ============ -->
+  <section class="section" id="how">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">The whole process</span>
+        <h2>Three steps. That's it.</h2>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span class="step-num">1</span>
+          <svg class="icon"><use href="#icon-key"/></svg>
+          <h3>Press your hotkey</h3>
+          <p>Wake Digo from the menu bar or a single keystroke, wherever your cursor happens to be.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">2</span>
+          <svg viewBox="0 0 200 250" style="width:46px;height:46px;color:var(--ink);margin:6px 0 14px"><use href="#mascot"/></svg>
+          <h3>Just talk</h3>
+          <p>Ramble, pause, backtrack — Digo keeps up and works out what you meant.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">3</span>
+          <svg class="icon"><use href="#icon-check"/></svg>
+          <h3>Read tidy text</h3>
+          <p>Formatted, punctuated text lands right at your cursor, ready to send.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHO IT'S FOR ============ -->
+  <section class="section" id="for">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Made for</span>
+        <h2>If you talk faster than you type</h2>
+      </div>
+      <div class="for-grid">
+        <div class="for-card">
+          <h3>Writers &amp; note-takers</h3>
+          <p>Capture drafts and half-formed ideas before they slip away.</p>
+        </div>
+        <div class="for-card">
+          <h3>Developers</h3>
+          <p>Dictate commit messages, comments, and quick docs without breaking flow.</p>
+        </div>
+        <div class="for-card">
+          <h3>Students &amp; researchers</h3>
+          <p>Turn lectures, interviews, and voice memos into searchable notes.</p>
+        </div>
+        <div class="for-card">
+          <h3>Anyone who hates typing</h3>
+          <p>Sometimes your thumbs just need the afternoon off.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WAITLIST ============ -->
+  <section class="section" id="waitlist">
+    <div class="wrap">
+      <div class="postcard">
+        <div>
+          <span class="eyebrow">Be first</span>
+          <h2 style="margin-top:12px">Get Digo before anyone else</h2>
+          <p class="lede">Drop your email and we'll ping you the moment the beta opens. No account needed, no spam — just one note when it's ready.</p>
+          <form id="waitlist-form" class="field-row" novalidate>
+            <input class="field" type="email" required placeholder="you@somewhere.com" aria-label="Email address">
+            <button type="submit" class="btn btn-accent">Get early access</button>
+          </form>
+          <p class="success-note" id="waitlist-success"><svg width="16" height="16" viewBox="0 0 24 24"><use href="#icon-check"/></svg> You're on the list — we'll be in touch.</p>
+        </div>
+        <svg class="icon-big" viewBox="0 0 200 250"><use href="#mascot"/></svg>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <svg class="brand-mark" viewBox="0 0 200 250"><use href="#mascot"/></svg>
+        <span class="brand-word">Digo</span>
+      </div>
+      <span class="footer-tagline">Made in a sketchbook. Shipping soon.</span>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Digo</span>
+      <a class="back-top" href="#top">↑ back to top</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    function wireForm(formId, successId) {
+      var form = document.getElementById(formId);
+      var success = document.getElementById(successId);
+      if (!form || !success) return;
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        form.classList.add('hidden');
+        success.classList.add('show');
+      });
+    }
+    wireForm('hero-form', 'hero-success');
+    wireForm('waitlist-form', 'waitlist-success');
+  })();
+</script>
+
+</body>
+</html>
