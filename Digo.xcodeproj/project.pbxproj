@@ -26,6 +26,7 @@
 		B543123D7C1CD042D25B5104 /* LaunchAtLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34FEB94C1D2A7EBD56F1FFB /* LaunchAtLoginManager.swift */; };
 		BC5223B22C179A669C85F9DE /* HotkeyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B07DE407C87E89C110DEBF /* HotkeyController.swift */; };
 		BFC2F65F76E05A22967F3FE4 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = D5817B4AEFD799CB41A7EA65 /* KeyboardShortcuts */; };
+		FDF7FCAD282CE93417924EFA /* DiagnosticLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A816E77EB8E8DFE1B257B5 /* DiagnosticLog.swift */; };
 		FEC24D01E202777223AF09DE /* WhisperModelStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6315F57623F787E6FF8D4ABF /* WhisperModelStorage.swift */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +44,7 @@
 		957352367CC878C381FC46FE /* DigoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigoApp.swift; sourceTree = "<group>"; };
 		A994D3E67CF8F0180AF741A0 /* DictationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictationController.swift; sourceTree = "<group>"; };
 		B050ACE45D6FA80994C33B66 /* StatusItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusItemController.swift; sourceTree = "<group>"; };
+		B6A816E77EB8E8DFE1B257B5 /* DiagnosticLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticLog.swift; sourceTree = "<group>"; };
 		C001C227E2D64949AA20A345 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		CA14CC9C1243B0F60CEA172F /* Digo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Digo.entitlements; sourceTree = "<group>"; };
 		D34FEB94C1D2A7EBD56F1FFB /* LaunchAtLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLoginManager.swift; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 			children = (
 				F416D3775CFEEAE51A44CF7D /* AppDelegate.swift */,
 				1863B8A3E91E9B336663639A /* Assets.xcassets */,
+				B6A816E77EB8E8DFE1B257B5 /* DiagnosticLog.swift */,
 				A994D3E67CF8F0180AF741A0 /* DictationController.swift */,
 				CA14CC9C1243B0F60CEA172F /* Digo.entitlements */,
 				957352367CC878C381FC46FE /* DigoApp.swift */,
@@ -187,6 +190,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				39129DB687803F32B5DE3B52 /* AppDelegate.swift in Sources */,
+				FDF7FCAD282CE93417924EFA /* DiagnosticLog.swift in Sources */,
 				B37271371FCBED622D027F3C /* DictationController.swift in Sources */,
 				2468B5F1F593DA5899E14319 /* DigoApp.swift in Sources */,
 				0FDDA831292E8B41758324F4 /* HUDView.swift in Sources */,

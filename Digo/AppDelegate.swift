@@ -12,12 +12,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private let textDeliveryService = TextDeliveryService()
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        DiagnosticLog.installUncaughtExceptionHandler()
+        DiagnosticLog.write("applicationDidFinishLaunching: start (version \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "?"))")
+
         if !PermissionsManager.isAccessibilityTrusted() {
+            DiagnosticLog.write("Accessibility not trusted — requesting")
             PermissionsManager.requestAccessibilityAccess()
         }
 
         let dictationController = DictationController()
         self.dictationController = dictationController
+        DiagnosticLog.write("DictationController created")
 
         let settingsWindowController = SettingsWindowController(dictationController: dictationController)
         self.settingsWindowController = settingsWindowController
@@ -27,11 +32,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             onOpenSettings: { settingsWindowController.show() }
         )
         self.statusItemController = statusItemController
+        DiagnosticLog.write("StatusItemController created")
 
         let hudWindowController = HUDWindowController()
         self.hudWindowController = hudWindowController
 
         hotkeyController = HotkeyController(onToggle: dictationController.toggle)
+        DiagnosticLog.write("applicationDidFinishLaunching: finished")
 
         dictationController.onStateChange = { [weak self, weak statusItemController, weak hudWindowController] state in
             statusItemController?.updateUI(for: state)

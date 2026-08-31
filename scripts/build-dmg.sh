@@ -60,8 +60,12 @@ create-dmg \
 
 if [ ! -f "build/Digo-$VERSION.dmg" ]; then
   echo "create-dmg didn't produce a file — falling back to a plain hdiutil dmg"
+  # build/dmg-source already has an Applications symlink alongside Digo.app —
+  # build from that, not from Digo.app alone, so the fallback still gives
+  # people something to drag the app onto.
+  ln -sf /Applications build/dmg-source/Applications
   hdiutil create -volname "Digo" \
-    -srcfolder build/export/Digo.app \
+    -srcfolder build/dmg-source \
     -ov -format UDZO \
     "build/Digo-$VERSION.dmg"
 fi
