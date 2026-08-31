@@ -86,11 +86,13 @@ final class DictationController: ObservableObject {
         Self.logger.debug("start() called, engine=\(self.selectedModelID, privacy: .public)")
         do {
             try activeEngine.startStreaming(
-                onPartial: { [weak self] text in
+                onPartial: { [weak self] rawText in
+                    let text = VoiceCommandFormatter.apply(to: rawText)
                     Self.logger.debug("partial: \(text, privacy: .public)")
                     DispatchQueue.main.async { self?.onPartialTranscript?(text) }
                 },
-                onFinal: { [weak self] text in
+                onFinal: { [weak self] rawText in
+                    let text = VoiceCommandFormatter.apply(to: rawText)
                     Self.logger.debug("final: \(text, privacy: .public)")
                     DispatchQueue.main.async {
                         self?.recordTranscript(text)

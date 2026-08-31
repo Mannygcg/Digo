@@ -4,6 +4,7 @@ import os
 final class TextDeliveryService {
     private static let logger = Logger(subsystem: "com.manuelcabrera.Digo", category: "TextDeliveryService")
     private static let backspaceKeyCode: CGKeyCode = 0x33
+    private static let returnKeyCode: CGKeyCode = 0x24
     /// Gap between synthetic keystrokes. JS-driven editors (Google Docs' canvas renderer, in
     /// particular) process input through their own event loop and can lose sync — dropping,
     /// reordering, or misplacing characters — when a burst of keystrokes arrives with no pacing
@@ -109,9 +110,24 @@ final class TextDeliveryService {
 
     /// Posts one real keystroke per character (rather than one CGEvent carrying the whole
     /// string) so the receiving app sees the same event pattern a real keyboard would produce.
+    /// Newlines specifically need to be a real Return keypress (its own virtual keycode) —
+    /// typing "\n" as Unicode text doesn't reliably trigger the same behavior most apps expect
+    /// from an actual Return press. Shift+Return rather than a plain Return, since many text
+    /// fields (chat boxes, search fields, message inputs) treat a plain Return as "submit" —
+    /// Shift+Return is the standard "insert a line break, don't submit" convention.
     private func typeText(_ text: String) {
         guard let source = CGEventSource(stateID: .combinedSessionState) else { return }
         for character in text {
+            if character == "\n" {
+                let down = CGEvent(keyboardEventSource: source, virtualKey: Self.returnKeyCode, keyDown: true)
+                let up = CGEvent(keyboardEventSource: source, virtualKey: Self.returnKeyCode, keyDown: false)
+                down?.flags = .maskShift
+                up?.flags = .maskShift
+                down?.post(tap: .cghidEventTap)
+                up?.post(tap: .cghidEventTap)
+                usleep(Self.interKeystrokeDelay)
+                continue
+            }
             guard let down = CGEvent(keyboardEventSource: source, virtualKey: 0, keyDown: true),
                   let up = CGEvent(keyboardEventSource: source, virtualKey: 0, keyDown: false) else { continue }
             let utf16 = Array(String(character).utf16)

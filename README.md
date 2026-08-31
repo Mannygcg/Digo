@@ -34,8 +34,8 @@ Digo uses [XcodeGen](https://github.com/yonaskolb/XcodeGen) to generate the Xcod
 
 ```bash
 brew install xcodegen
-git clone https://github.com/Mannygcg/Dilo.git
-cd Dilo/Digo
+git clone https://github.com/Mannygcg/Digo.git
+cd Digo/Digo
 xcodegen generate
 open Digo.xcodeproj
 ```

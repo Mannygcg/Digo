@@ -17,6 +17,7 @@
 		6DB8F95306B2CE35FE377992 /* WhisperKitEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E99CFA6A04D65F86589FBB /* WhisperKitEngine.swift */; };
 		7E1C1D3F523440C5C3980219 /* SettingsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA25314BD29EBA751DE8B0E0 /* SettingsWindowController.swift */; };
 		835CA7D168540E95DF8E4A0A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C001C227E2D64949AA20A345 /* SettingsView.swift */; };
+		83AF91E03201BA013B11BE33 /* VoiceCommandFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C08E3309F4E58A48878C95B /* VoiceCommandFormatter.swift */; };
 		90C97DD021767E8DC2FB5180 /* WhisperModelCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06C954845D96FBA85008592 /* WhisperModelCatalog.swift */; };
 		9795C276E71AEC39BAB0C839 /* PermissionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B71566E28B79540B6748FB /* PermissionsManager.swift */; };
 		98861806E4C617EEAF37E5FC /* WhisperKit in Frameworks */ = {isa = PBXBuildFile; productRef = AEEB62C8450454123F2E55BB /* WhisperKit */; };
@@ -41,6 +42,7 @@
 		58A61CF0A9B7B3FCAA7B92D7 /* HUDWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDWindowController.swift; sourceTree = "<group>"; };
 		6315F57623F787E6FF8D4ABF /* WhisperModelStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhisperModelStorage.swift; sourceTree = "<group>"; };
 		7819F815A60B51EBA25DF3F1 /* KeyboardShortcuts+Names.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardShortcuts+Names.swift"; sourceTree = "<group>"; };
+		7C08E3309F4E58A48878C95B /* VoiceCommandFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceCommandFormatter.swift; sourceTree = "<group>"; };
 		957352367CC878C381FC46FE /* DigoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigoApp.swift; sourceTree = "<group>"; };
 		A994D3E67CF8F0180AF741A0 /* DictationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictationController.swift; sourceTree = "<group>"; };
 		B050ACE45D6FA80994C33B66 /* StatusItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusItemController.swift; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 				FA25314BD29EBA751DE8B0E0 /* SettingsWindowController.swift */,
 				B050ACE45D6FA80994C33B66 /* StatusItemController.swift */,
 				0D17C0DADD512C7029B2ADC0 /* TextDeliveryService.swift */,
+				7C08E3309F4E58A48878C95B /* VoiceCommandFormatter.swift */,
 				35E99CFA6A04D65F86589FBB /* WhisperKitEngine.swift */,
 				E06C954845D96FBA85008592 /* WhisperModelCatalog.swift */,
 				6315F57623F787E6FF8D4ABF /* WhisperModelStorage.swift */,
@@ -204,6 +207,7 @@
 				7E1C1D3F523440C5C3980219 /* SettingsWindowController.swift in Sources */,
 				3E2638097BA3B1B92F67CA70 /* StatusItemController.swift in Sources */,
 				0D35DCFB7B6795B2032F38F7 /* TextDeliveryService.swift in Sources */,
+				83AF91E03201BA013B11BE33 /* VoiceCommandFormatter.swift in Sources */,
 				6DB8F95306B2CE35FE377992 /* WhisperKitEngine.swift in Sources */,
 				90C97DD021767E8DC2FB5180 /* WhisperModelCatalog.swift in Sources */,
 				FEC24D01E202777223AF09DE /* WhisperModelStorage.swift in Sources */,
