@@ -23,6 +23,22 @@ struct SettingsView: View {
                 KeyboardShortcuts.Recorder("Toggle Dictation:", name: .toggleDictation)
             }
 
+            Section("Voice Commands") {
+                voiceCommandRow(phrase: "\u{201c}open quote\u{201d} / \u{201c}close quote\u{201d}", effect: "Types a literal \" character.")
+                voiceCommandRow(phrase: "\u{201c}open parenthesis\u{201d} / \u{201c}close parenthesis\u{201d}", effect: "Types ( or ).")
+                voiceCommandRow(phrase: "\u{201c}comma\u{201d}, \u{201c}period\u{201d}, \u{201c}question mark\u{201d}, \u{201c}exclamation point\u{201d}", effect: "Types the matching punctuation.")
+                voiceCommandRow(phrase: "\u{201c}new paragraph\u{201d}", effect: "Starts a new paragraph.")
+                voiceCommandRow(phrase: "\u{201c}scratch that\u{201d}", effect: "Deletes the last sentence you dictated.")
+                voiceCommandRow(phrase: "\u{201c}scratch last one\u{201d} / \u{201c}scratch last three\u{201d}", effect: "Deletes the last word, or the last N words.")
+
+                Stepper(value: $dictationController.scratchThatWordLimit, in: 1...30) {
+                    Text("\u{201c}Scratch that\u{201d} deletes at most \(dictationController.scratchThatWordLimit) words")
+                }
+                Text("If the last sentence is longer than that, only the last \(dictationController.scratchThatWordLimit) words are removed instead of the whole sentence.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+
             Section("Engines") {
                 ForEach(dictationController.enabledModelIDs, id: \.self) { modelID in
                     engineRow(modelID: modelID)
@@ -39,7 +55,17 @@ struct SettingsView: View {
             }
         }
         .formStyle(.grouped)
-        .frame(width: 440, height: 480)
+        .frame(width: 440, height: 700)
+    }
+
+    @ViewBuilder
+    private func voiceCommandRow(phrase: String, effect: String) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(phrase)
+            Text(effect)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
     }
 
     @ViewBuilder

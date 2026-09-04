@@ -11,6 +11,8 @@ final class DictationController: ObservableObject {
     private static let logger = Logger(subsystem: "com.manuelcabrera.Digo", category: "DictationController")
     private static let selectedModelDefaultsKey = "selectedWhisperModel"
     private static let enabledModelsDefaultsKey = "enabledWhisperModels"
+    private static let scratchThatWordLimitDefaultsKey = "scratchThatWordLimit"
+    private static let defaultScratchThatWordLimit = 7
 
     private var engines: [String: WhisperKitEngine] = [:]
 
@@ -43,6 +45,11 @@ final class DictationController: ObservableObject {
         }
     }
 
+    /// How many words "scratch that" removes when the last sentence is longer than this.
+    @Published var scratchThatWordLimit: Int {
+        didSet { UserDefaults.standard.set(scratchThatWordLimit, forKey: Self.scratchThatWordLimitDefaultsKey) }
+    }
+
     private(set) var state: DictationState = .idle {
         didSet { onStateChange?(state) }
     }
@@ -68,6 +75,8 @@ final class DictationController: ObservableObject {
             ?? WhisperModelCatalog.all.filter(\.isDefault).map(\.id)
         selectedModelID = UserDefaults.standard.string(forKey: Self.selectedModelDefaultsKey)
             ?? WhisperModelCatalog.defaultSelection
+        let storedLimit = UserDefaults.standard.object(forKey: Self.scratchThatWordLimitDefaultsKey) as? Int
+        scratchThatWordLimit = storedLimit ?? Self.defaultScratchThatWordLimit
         engine(for: selectedModelID).preload()
     }
 
@@ -85,14 +94,15 @@ final class DictationController: ObservableObject {
     private func start() {
         Self.logger.debug("start() called, engine=\(self.selectedModelID, privacy: .public)")
         do {
+            let scratchThatWordLimit = scratchThatWordLimit
             try activeEngine.startStreaming(
                 onPartial: { [weak self] rawText in
-                    let text = VoiceCommandFormatter.apply(to: rawText)
+                    let text = VoiceCommandFormatter.apply(to: rawText, scratchThatWordLimit: scratchThatWordLimit)
                     Self.logger.debug("partial: \(text, privacy: .public)")
                     DispatchQueue.main.async { self?.onPartialTranscript?(text) }
                 },
                 onFinal: { [weak self] rawText in
-                    let text = VoiceCommandFormatter.apply(to: rawText)
+                    let text = VoiceCommandFormatter.apply(to: rawText, scratchThatWordLimit: scratchThatWordLimit)
                     Self.logger.debug("final: \(text, privacy: .public)")
                     DispatchQueue.main.async {
                         self?.recordTranscript(text)

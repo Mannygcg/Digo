@@ -1,10 +1,15 @@
 import AppKit
+import Foundation
 import os
 
 final class TextDeliveryService {
     private static let logger = Logger(subsystem: "com.manuelcabrera.Digo", category: "TextDeliveryService")
     private static let backspaceKeyCode: CGKeyCode = 0x33
     private static let returnKeyCode: CGKeyCode = 0x24
+    /// A gap this long since the last update means whatever's on screen is treated as settled —
+    /// new speech starts a fresh phrase rather than being diffed against (and potentially
+    /// backspacing into) text from before the pause.
+    private static let pauseCommitThreshold: TimeInterval = 5.0
     /// Gap between synthetic keystrokes. JS-driven editors (Google Docs' canvas renderer, in
     /// particular) process input through their own event loop and can lose sync — dropping,
     /// reordering, or misplacing characters — when a burst of keystrokes arrives with no pacing
@@ -18,11 +23,13 @@ final class TextDeliveryService {
     /// On-screen text for the current live, still-correctable phrase (not yet committed).
     private var typedPhraseText = ""
     private var pendingSpaceNeeded = false
+    private var lastUpdateAt: Date?
 
     func beginLiveSession() {
         queue.async {
             self.typedPhraseText = ""
             self.pendingSpaceNeeded = false
+            self.lastUpdateAt = nil
         }
     }
 
@@ -30,9 +37,12 @@ final class TextDeliveryService {
         queue.async {
             guard PermissionsManager.isAccessibilityTrusted(), !text.isEmpty, text != self.typedPhraseText else { return }
 
-            if Self.isLikelyNewPhrase(previous: self.typedPhraseText, incoming: text) {
+            let now = Date()
+            let pausedTooLong = self.lastUpdateAt.map { now.timeIntervalSince($0) >= Self.pauseCommitThreshold } ?? false
+            if pausedTooLong || Self.isLikelyNewPhrase(previous: self.typedPhraseText, incoming: text) {
                 self.commitCurrentPhrase()
             }
+            self.lastUpdateAt = now
             self.replaceTypedPhrase(with: text)
         }
     }
